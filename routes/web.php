@@ -14,13 +14,13 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Auth::routes();
+Auth::routes();
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLoginForm');
 
-Route::post('login', 'Auth\LoginController@login')->name('login');
+// Route::post('login', 'Auth\LoginController@login')->name('login');
 
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index');
 
@@ -36,4 +36,6 @@ Route::group(array('middleware' => 'admin'), function() {
 	Route::resource('users', 'UserController');
 	Route::resource('permissions', 'PermissionController');
 	Route::resource('roles', 'RoleController');
+	Route::get('news/export', 'NewsController@index')->name('news.export');
+	Route::resource('news', 'NewsController');
 });

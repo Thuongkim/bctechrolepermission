@@ -39,7 +39,7 @@
                     <tbody>
                         @foreach($pGroups as $key => $value)
                         <tr>
-                            @if (!in_array($key, ['password','roles']) )
+                            @if (!in_array($key, ['password']) )
                             <td style="text-align: center; vertical-align: middle;">{!! $count++ !!}</td>
                             <td style="min-width: 200px;" >{!! $key !!}</td>
                             <td style="text-align: center; vertical-align: middle;">
@@ -62,14 +62,14 @@
                                 {!! Form::checkbox('permissions[]', $value['delete'], old('permissions'), []) !!}
                                 @endif
                             </td>
+                            @foreach($value as $k => $v)
+                                @if (!in_array($k, ['read', 'update', 'create', 'delete']))
+                                <td style="text-align: center; vertical-align: middle;">
+                                    {!! Form::checkbox('permissions[]', $v, old('permissions'), []) !!} {!! $k !!}
+                                </td>
+                                @endif
+                            @endforeach
                             @endif
-{{--                            @foreach($value as $k => $v)
-                            @if (!in_array($k, ['read', 'update', 'create', 'delete']))
-                            <td style="text-align: center; vertical-align: middle;">
-                                {!! Form::checkbox('permissions[]', $v, old('permissions'), []) !!} {!! $k !!}
-                            </td>
-                            @endif
-                            @endforeach --}}
                         </tr>
                         @endforeach
                     </tbody>

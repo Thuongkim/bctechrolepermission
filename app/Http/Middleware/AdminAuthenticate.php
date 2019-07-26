@@ -63,7 +63,7 @@ class AdminAuthenticate
             $action = $data[1];
         // dd(str_replace('-', '_', $data[0]) . '.' . $action);
         if (!\Auth::guard($guard)->user()->can(str_replace('-', '_', $data[0]) . '.' . $action))
-            return redirect()->back();
+            return redirect()->back()->withErrors('You do not have this permisson');
         return $next($request);
     }
 }

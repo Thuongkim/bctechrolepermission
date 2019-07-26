@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Role;
 use DB;
 use Validator;
+use Hash;
 use Flash;
 use Response;
 
@@ -64,6 +65,7 @@ class UserController extends AppBaseController
             return back()->withErrors($validator)->withInput();
         $input = $request->all();
 
+        $input['password'] = Hash::make($input['password']);
         $user = $this->userRepository->create($input);
 
         foreach ($request->input('roles') as $role) {
@@ -137,7 +139,9 @@ class UserController extends AppBaseController
         $validator = \Validator::make($input = $request->all(), User::validate($id));
         if ($validator->fails()) return back()->withErrors($validator)->withInput();
 
-        $user = $this->userRepository->update($request->all(), $id);
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $user = $this->userRepository->update($input, $id);
 
         DB::table('role_user')->where('user_id',$id)->delete();
 
