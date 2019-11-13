@@ -41,29 +41,54 @@ return [
     |
     */
 
-    'disks' => [
+    // 'disks' => [
 
-        'local' => [
+    //     'local' => [
+    //         'driver' => 'local',
+    //         'root' => storage_path('app'),
+    //     ],
+
+    //     'public' => [
+    //         'driver' => 'local',
+    //         'root' => storage_path('app/public'),
+    //         'url' => env('APP_URL').'/storage',
+    //         'visibility' => 'public',
+    //     ],
+
+    //     's3' => [
+    //         'driver' => 's3',
+    //         'key' => env('AWS_ACCESS_KEY_ID'),
+    //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+    //         'region' => env('AWS_DEFAULT_REGION'),
+    //         'bucket' => env('AWS_BUCKET'),
+    //         'url' => env('AWS_URL'),
+    //     ],
+
+    // ],
+    'disks' => [
+    // images folder in public path
+        'assets' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => public_path('assets/media/image/'),
+            'url' => env('APP_URL').'/assets/media/image/',
         ],
 
+    // public folder in storage/app/public
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-        ],
+        'url' => env('APP_URL').'/storage', // https://laravel.com/docs/5.7/filesystem#file-urls
+        'visibility' => 'public',
+    ],
 
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+        // ftp
+        'dd-wrt' => [
+            'driver'   => 'ftp',
+            'host'     => 'ftp.dd-wrt.com',
+            'username' => 'anonymous',
+            'passive'  => true,
+            'timeout'  => 30,
         ],
-
     ],
 
 ];

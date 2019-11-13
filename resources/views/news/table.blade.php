@@ -13,7 +13,7 @@
         @foreach($news as $news)
             <tr>
                 <td>{!! $news->name !!}</td>
-            <td>{!! $news->image !!}</td>
+            <td><img src="{!! $news->image !!}" width="50px" height="50px"></td>
             <td>{!! $news->summary !!}</td>
             <td>{!! $news->content !!}</td>
                 <td>
@@ -21,7 +21,7 @@
                     <div class='btn-group'>
                         <a href="{!! route('news.show', [$news->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
                         <a href="{!! route('news.edit', [$news->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'id' => 'confirm_delete']) !!}
                     </div>
                     {!! Form::close() !!}
                 </td>

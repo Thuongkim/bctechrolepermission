@@ -12,6 +12,10 @@ use Auth;
 use Flash;
 use Response;
 use Input;
+use App\Models\News;
+use App\Http\UsersACLRepository;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class NewsController extends AppBaseController
 {
@@ -32,7 +36,8 @@ class NewsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $news = $this->newsRepository->all();
+        // dd(Auth::user()->id);
+        $news = News::where('user_id', Auth::user()->id)->get();
 
         return view('news.index')
             ->with('news', $news);
@@ -66,7 +71,10 @@ class NewsController extends AppBaseController
             $name = $file -> getClientOriginalName();
             $name = date('Y-m-d').Time().rand(11111, 99999).'.'.$extension;
             $photo = $destinationPath.'/'.$name;
-            $file->move($destinationPath, $name);
+            $manager = new ImageManager(array('driver' => 'gd'));
+            $watermark = $manager->make(public_path('/assets/media/image/images/logo.png'))->opacity(50);
+            // public_path insert 'public',save bat buoc co.
+            $file = $manager->make($file->getRealPath())->insert($watermark, 'bottom-right', 10, 10)->save($destinationPath. '/' .$name);
         }
         else 
         {
@@ -95,7 +103,7 @@ class NewsController extends AppBaseController
         //     $input['image'] = date('dm') . '/' . '_' . $timestamp . '.' .  $ext;
         // }
 
-        $input['image'] = $this->insertPhoto('image', 'assets/media/image/images', 'no image', $request);
+        $input['image'] = $this->insertPhoto('image', 'assets/media/image/images/'. UsersACLRepository::vn_str_filter(Auth::user()->name), 'no image', $request);
         $input['user_id'] = Auth::user()->id;
 
         $news = $this->newsRepository->create($input);
@@ -191,7 +199,7 @@ class NewsController extends AppBaseController
 
         $this->newsRepository->delete($id);
 
-        Flash::success('News deleted successfully.');
+        // Flash::success('News deleted successfully.');
 
         return redirect(route('news.index'));
     }

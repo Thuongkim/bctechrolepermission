@@ -14,6 +14,7 @@ use Validator;
 use Hash;
 use Flash;
 use Response;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends AppBaseController
 {
@@ -72,7 +73,7 @@ class UserController extends AppBaseController
             $user->attachRole($role);
         }
 
-        Flash::success('User saved successfully.');
+        Alert::success('Success Title', 'Success Message');
 
         return redirect(route('users.index'));
     }
@@ -135,7 +136,7 @@ class UserController extends AppBaseController
 
             return redirect(route('users.index'));
         }
-
+        dd(User::validate($id));
         $validator = \Validator::make($input = $request->all(), User::validate($id));
         if ($validator->fails()) return back()->withErrors($validator)->withInput();
 

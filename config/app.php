@@ -180,6 +180,8 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
     ],
 
@@ -234,6 +236,8 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ],
 
